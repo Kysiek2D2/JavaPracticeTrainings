@@ -1,0 +1,47 @@
+import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicInteger;
+
+public class Greed{
+    public static int greedy(int[] dice){
+      
+    System.out.println(Arrays.toString(dice));
+      
+      AtomicInteger result = new AtomicInteger(0);
+      int[][] pointsMatrix = new int[][]
+      {
+          {0,100,200,1000,1100,1200}, //for dice value = 1
+          {0,0,0,200,200,200}, //for dice value = 2
+          {0,0,0,300,300,300}, //for dice value = 3
+          {0,0,0,400,400,400}, //for dice value = 4
+          {0,50,100,500,550,600}, //for dice value = 5
+          {0,0,0,600,600,600} //for dice value =6
+      };
+
+      for(AtomicInteger i = new AtomicInteger(0); i.get()<=5;i.addAndGet(1))
+      {
+        System.out.println("Value of i: "+(i.get()+1));
+        result.set(result.get()+pointsMatrix[i.get()][Long.valueOf(Arrays.stream(dice).filter(k -> k==i.get()+1).count()).intValue()]);
+        System.out.println("Current result value: "+result.get());
+      }
+
+        return result.get();
+    }
+  }
+  
+  /*
+  -----------------------------------------------------------------------------------------------------
+  Greed is a dice game played with five six-sided dice. 
+  Your mission, should you choose to accept it, is to score a throw according to these rules. 
+  You will always be given an array with five six-sided dice values.
+
+ Three 1's => 1000 points
+ Three 6's =>  600 points
+ Three 5's =>  500 points
+ Three 4's =>  400 points
+ Three 3's =>  300 points
+ Three 2's =>  200 points
+ One   1   =>  100 points
+ One   5   =>   50 point
+A single die can only be counted once in each roll. 
+For example, a given "5" can only count as part of a triplet (contributing to the 500 points) or as a single 50 points, but not both in the same roll.
+  */

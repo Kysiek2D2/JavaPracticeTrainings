@@ -1,0 +1,21 @@
+class Solution {
+    public boolean isPalindrome(int x) {
+        int restValue=0, reversedNumber=0, originalNumber=x;
+        while(x>0){
+            restValue=x%10; //take last digit and store in variable
+            x/=10; //cut last digit from input number
+            reversedNumber=reversedNumber*10+restValue; //lift reversedNumber by 10 times, and add restValue at the end
+        }
+        return reversedNumber==originalNumber;
+    }
+}
+
+/*
+-------------------------------------------------------------------------------------------------------------------------
+Given an integer x, return true if x is palindrome integer.
+An integer is a palindrome when it reads the same backward as forward. For example, 121 is palindrome while 123 is not.
+Example 1:
+Input: x = 121
+Output: true
+*/
+

@@ -1,0 +1,92 @@
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.stream.Collectors;
+
+public class Solution {
+
+    public static int solveSuperMarketQueue(int[] customers, int n) {
+      
+      int outputTime = 0;
+      ArrayList<Integer> tillsTimeRemainingList = new ArrayList<>();
+      int minTimeRemaining = 0;
+      boolean customerOnHold = false;
+      
+      
+      //add required number of tills
+      for(int i=n;i>0;i--)
+        tillsTimeRemainingList.add(0);
+      
+      //Print tiles:
+      for(int i : tillsTimeRemainingList)
+        System.out.println(i);
+      
+      //next customer...
+      for(int j=0;j<=customers.length+1;j++)
+      {
+        //queue moves on...
+        System.out.println("Queue moves on...");
+        minTimeRemaining = (int) tillsTimeRemainingList
+          .stream()
+          .mapToInt(v -> v)
+          .filter(c -> c > 0)
+          .min()
+          .orElse(0);
+        
+        outputTime+=minTimeRemaining;
+        System.out.println("Current output time: "+outputTime);
+        for(int k=0;k<tillsTimeRemainingList.size();k++)
+        {
+          System.out.println("Checking next tile...");
+          //reduce waiting time...
+          System.out.println("Reducing queue nr "+k+" time from "+tillsTimeRemainingList.get(k)+" by  "+minTimeRemaining);
+          tillsTimeRemainingList.set(k,tillsTimeRemainingList.get(k)-minTimeRemaining);
+          //assign customer to queue if free and if there is still customer in queue...
+          if(tillsTimeRemainingList.get(k)<=0 && j<customers.length)
+          {
+            tillsTimeRemainingList.set(k,customers[j]);
+            System.out.println("Current customer: "+j+" with time= "+customers[j]+", goes to till number "+k+" which has time set to "+tillsTimeRemainingList.get(k));
+            j++;
+            customerOnHold = true;
+          }
+          if(k==tillsTimeRemainingList.size()-1  && tillsTimeRemainingList.get(k)>0 && customerOnHold==true)
+              j--;
+        }
+        System.out.println("Next customer will be: "+(j+1));
+        
+      }
+      //5,7,3,5,5,3,7,5,1,6,1,6,2,7,7
+      outputTime += (int) tillsTimeRemainingList
+          .stream()
+          .mapToInt(v -> v)
+          .filter(c -> c > 0)
+          .max()
+          .orElse(0);
+      System.out.println("Final output time: "+outputTime);
+      return outputTime;
+    }
+}
+
+
+/*
+-------------------------------------------------------------------------------------------
+There is a queue for the self-checkout tills at the supermarket. Your task is write a function to calculate the total time required for all the customers to check out!
+
+input
+customers: an array of positive integers representing the queue. Each integer represents a customer, and its value is the amount of time they require to check out.
+n: a positive integer, the number of checkout tills.
+output
+The function should return an integer, the total time required.
+
+queueTime([5,3,4], 1)
+// should return 12
+// because when there is 1 till, the total time is just the sum of the times
+
+queueTime([10,2,3,3], 2)
+// should return 10
+// because here n=2 and the 2nd, 3rd, and 4th people in the 
+// queue finish before the 1st person has finished.
+
+queueTime([2,3,10], 2)
+// should return 12
+*/

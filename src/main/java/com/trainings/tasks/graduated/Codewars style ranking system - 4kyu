@@ -1,0 +1,77 @@
+// TODO: create the User class/object
+// it must support rank, progress, and the incProgress(int rank) method
+
+public class User {
+  
+
+    public int rank;
+    public int progress;
+    
+    public User(){
+      this.rank = -8;
+      this.progress = 0;
+    }
+    
+    public void incProgress (int finishedKataRank) throws IllegalArgumentException{
+        int rankDifference =0;
+        if(finishedKataRank >8 || finishedKataRank<-8 ||finishedKataRank==0)
+            throw new IllegalArgumentException("Rank out of bounds!");
+
+        System.out.println("Current rank: "+rank+
+                          "\nCurrent progress: "+progress);
+      
+        if(rank==8)
+            return;
+        
+        if((rank<0 && finishedKataRank >0) || (rank>0 && finishedKataRank <0))
+        {
+            rankDifference = (finishedKataRank+8)-(rank+8)-1;
+        }
+        else
+        {
+            rankDifference = (finishedKataRank+8)-(rank+8);
+        }
+
+       
+
+        System.out.println("New kata rank: "+finishedKataRank+
+                          "\n Kata rank difference: "+rankDifference);
+    
+        if(rankDifference<=-1)
+        {
+            this.progress+=1;
+        }
+        else if(rankDifference==0)
+        {
+            this.progress+=3;
+        }
+        else if(rankDifference>=1)
+        {
+            this.progress+=(10*rankDifference*rankDifference);
+        }
+
+
+        if(progress>=100 && rank<8)
+        {
+            int ranksAqquired = progress /100;
+            if(rank<0 && rank+ranksAqquired>=0)
+            {
+                rank+=ranksAqquired+1;
+            }
+            else
+            {
+                rank+=ranksAqquired;
+            }
+            
+            if(rank!=8)
+                progress=progress%100;
+            else
+                progress=0;
+        }
+    }
+  }
+  
+  /*
+  ------------------------------------------------------------------------------
+  Write a class called User that is used to calculate the amount that a user will progress through a ranking system similar to the one Codewars uses.
+  */

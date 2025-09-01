@@ -1,0 +1,45 @@
+class Solution {
+    public static String whoLikesIt(String... names) {
+      
+      String outputString = "";
+      
+      System.out.println("People that likes it: "+names.length);
+      
+      if(names.length==0) return "no one likes this";
+      else if(names.length==1) return names[0]+" likes this";
+      else if (names.length>=2 && names.length<=3)
+      {
+        //add first name:
+        outputString+=names[0];
+        //add middle names:
+        for(int i=1;i<=names.length-2;i++){
+          outputString+=", "+names[i];
+        }
+        //add last name:
+        outputString+=" and "+names[names.length-1]+" like this";
+      }
+      else
+      {
+        //add first and second name:
+        outputString+=names[0]+", "+names[1];
+        int othersNumber=names.length-2;
+        //add information about the rest:
+        outputString+=" and "+othersNumber+" others like this";
+      }
+      return outputString;
+    }
+}
+
+/*
+-------------------------------------------------------------------------------------------------------------------------
+You probably know the "like" system from Facebook and other pages. People can "like" blog posts, pictures or other items. We want to create the text that should be displayed next to such an item.
+
+Implement the function likes which takes an array containing the names of people that like an item. It must return the display text as shown in the examples:
+
+likes {} // must be "no one likes this"
+likes {"Peter"} // must be "Peter likes this"
+likes {"Jacob", "Alex"} // must be "Jacob and Alex like this"
+likes {"Max", "John", "Mark"} // must be "Max, John and Mark like this"
+likes {"Alex", "Jacob", "Mark", "Max"} // must be "Alex, Jacob and 2 others like this"
+For 4 or more names, the number in and 2 others simply increases.
+*/

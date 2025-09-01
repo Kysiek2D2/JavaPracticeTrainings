@@ -1,0 +1,37 @@
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class Line {
+    public static String WhoIsNext(String[] names, int n)
+    {
+       Queue<String> colaQueue = new LinkedList<>();
+       String person = "";
+
+       //initializing queue:
+       for(String name : names)
+       {
+           colaQueue.add(name);
+       }
+       
+       //queue moves on...
+       for(int i=1;i<=n;i++)
+       {
+            person = colaQueue.poll();
+            colaQueue.add(person);
+            colaQueue.add(person);
+       }
+
+       return person;
+     }
+}
+
+/*
+-----------------------------------------------------------------------------
+Sheldon, Leonard, Penny, Rajesh and Howard are in the queue for a "Double Cola" drink vending machine; there are no other people in the queue. The first one in the queue (Sheldon) buys a can, drinks it and doubles! The resulting two Sheldons go to the end of the queue. Then the next in the queue (Leonard) buys a can, drinks it and gets to the end of the queue as two Leonards, and so on.
+
+For example, Penny drinks the third can of cola and the queue will look like this:
+
+Rajesh, Howard, Sheldon, Sheldon, Leonard, Leonard, Penny, Penny
+Write a program that will return the name of the person who will drink the n-th cola.
+*/

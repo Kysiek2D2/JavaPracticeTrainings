@@ -1,0 +1,42 @@
+public class BitCounting {
+
+	public static int countBits(int n){
+		String binaryRepresentation = Integer.toBinaryString(n);
+    int counter = 0;    
+    System.out.println(binaryRepresentation.toCharArray());
+    
+    for(char ch : binaryRepresentation.toCharArray()){
+      counter+= (ch=='1') ? 1 : 0;
+    }
+    
+    return counter;
+	}
+	
+}
+
+/*
+-----------------------------------------------------------------------------------
+Write a function that takes an integer as input, and returns the number of bits that are equal to one in the binary representation of that number. 
+You can guarantee that input is non-negative.
+
+Example: The binary representation of 1234 is 10011010010, so the function should return 5 in this case
+*/
+
+
+/*
+Solution with Java Streams:
+import java.util.stream.*;
+public class DRoot {
+  public static int digital_root(int n) {
+    if (n < 10) {
+      return Stream.of(String.valueOf(n).split(""))
+                    .mapToInt(Integer::parseInt)
+                    .sum();
+    } else {
+      return digital_root(Stream.of(String.valueOf(n).split(""))
+                    .mapToInt(Integer::parseInt)
+                    .sum());
+    }    
+  }
+}
+*/
