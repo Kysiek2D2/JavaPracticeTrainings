@@ -68,15 +68,23 @@ public class LeetCodeEasy {
         String result = "";
         int index = 0;
 
-        while(index <= 200){
-            String a = strs[0].substring(0, index);
-            for(int i = 1; i < strs.length; i++){
-                String b = strs[i].substring(0, index);
-                if(!a.equals(b)) {
-                    return result;
+        if(strs == null || strs.length == 0){
+            return "";
+        }
+
+        if(strs.length == 1){
+            return strs[0];
+        }
+
+        while(index <= strs[0].length()){
+            for(int i = 0; i + 1 < strs.length; i++) {
+                if(index >= strs[i].length() ||
+                        index >= strs[i+1].length() ||
+                        strs[i].charAt(index) != strs[i+1].charAt(index)){
+                    return strs[0].substring(0, index);
                 }
             }
-            result = a;
+            result = strs[0].substring(0, index);
             index++;
         }
         return result;
