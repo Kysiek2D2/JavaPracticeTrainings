@@ -41,4 +41,120 @@ public class LeetCodeMedium {
         }
         return result;
     }
+
+    //2. Add Two Numbers
+    public static class ListNode {
+        public int val;
+        public ListNode next;
+
+        ListNode() {
+        }
+
+        public ListNode(int val) {
+            this.val = val;
+        }
+
+        ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
+    }
+
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        if (l1 == null && l2 == null) {
+            return new ListNode();
+        }
+        if (l1 == null) {
+            return l2;
+        }
+        if (l2 == null) {
+            return l1;
+        }
+        int iteration = 0;
+        ListNode currentL1 = l1;
+        ListNode currentL2 = l2;
+        ListNode firstResultNode = new ListNode();
+        ListNode currentResultNode = firstResultNode;
+        int extraNumberFromPreviousSum = 0;
+        while (currentL1 != null || currentL2 != null) {
+            iteration++;
+            int val1 = 0;
+            int val2 = 0;
+            if(currentL1 != null) {
+                val1 = currentL1.val;
+                currentL1 = currentL1.next;
+            }
+            if(currentL2 != null) {
+                val2 = currentL2.val;
+                currentL2 = currentL2.next;
+            }
+
+            currentResultNode.val = val1 + val2 + extraNumberFromPreviousSum;
+            extraNumberFromPreviousSum = 0;
+            if (currentResultNode.val >= 10) {
+                extraNumberFromPreviousSum = 1;
+                currentResultNode.val = currentResultNode.val - 10;
+            }
+
+            debugStatement: {
+                System.out.println("iteration: " + iteration);
+                System.out.println("L1.val: " + val1);
+                System.out.println("L2.val: " + val2);
+                System.out.println("extraNumberFromPreviousSum: " + extraNumberFromPreviousSum);
+            }
+            if (currentL1 != null || currentL2 != null) {
+                currentResultNode.next = new ListNode();
+                currentResultNode = currentResultNode.next;
+            }
+        }
+
+        if (extraNumberFromPreviousSum > 0) {
+            currentResultNode.next = new ListNode(extraNumberFromPreviousSum);
+        }
+        return firstResultNode;
+    }
+
+    //3. Longest Substring Without Repeating Characters
+    public int lengthOfLongestSubstring(String s) {
+        if (s == null) {
+            return 0;
+        }
+
+        if (s.length() == 1 || s.isEmpty()) {
+            return s.length();
+        }
+
+        int firstCharIndex = 0;
+        int nextCharIndex = 0;
+        int longestFoundStringLength = 0;
+
+        while (nextCharIndex < s.length() - 1) {
+            firstCharIndex = findFirstDuplicateCharIndex(firstCharIndex, nextCharIndex, s);
+            nextCharIndex++;
+            if (nextCharIndex - firstCharIndex + 1 > longestFoundStringLength) {
+                longestFoundStringLength = nextCharIndex - firstCharIndex + 1;
+            }
+        }
+
+        return longestFoundStringLength;
+    }
+
+    private int findFirstDuplicateCharIndex(int firstCharIndex, int nextCharIndex, String s) {
+        String subString = s.substring(firstCharIndex, nextCharIndex + 1);
+
+        char nextChar = s.charAt(nextCharIndex + 1);
+
+        System.out.println("subString: " + subString
+                + ", firstCharIndex: " + firstCharIndex
+                + ", nextCharIndex: " + nextCharIndex
+                + ", nextChar: " + nextChar);
+
+        for (int i = 0; i < subString.length(); i++) {
+            if (nextChar == subString.charAt(i)) {
+                return firstCharIndex + i + 1;
+            }
+        }
+        return firstCharIndex;
+    }
+
 }
