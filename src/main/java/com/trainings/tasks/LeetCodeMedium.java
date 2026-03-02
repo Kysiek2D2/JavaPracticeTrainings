@@ -157,4 +157,44 @@ public class LeetCodeMedium {
         return firstCharIndex;
     }
 
+    //5. Longest Palindromic Substring
+    public String longestPalindrome(String s) {
+        int longestPalindromeLength = s.length() - 1;
+        while (longestPalindromeLength > 0) {
+            System.out.println("longestPalindromeLength: " + longestPalindromeLength);
+            for (int y = 0; y < s.length() - longestPalindromeLength; y++) {
+                String subString = s.substring(y, y + longestPalindromeLength);
+                System.out.println("subString: " + subString);
+                if (isPalindrome(subString)) {
+                    return subString;
+                }
+            }
+            longestPalindromeLength--;
+        }
+        return "";
+    }
+
+    private boolean isPalindrome(String s) {
+        if (s == null) {
+            return false;
+        }
+
+        if (s.length() == 1) {
+            return true;
+        }
+
+        char[] charArray = s.toCharArray();
+        int i = 0;
+        int j = charArray.length - 1;
+        while (true) {
+            if (charArray[i]  != charArray[j]) {
+                return false;
+            }
+            i++;
+            j--;
+            if (i > charArray.length / 2) {
+                return true;
+            }
+        }
+    }
 }
