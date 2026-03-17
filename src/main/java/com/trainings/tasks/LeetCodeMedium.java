@@ -197,4 +197,88 @@ public class LeetCodeMedium {
             }
         }
     }
+
+    public String longestPalindromeBetterSolution(String s) {
+        if (s == null || s.length() < 2) return s;
+
+        int start = 0, maxLen = 1;
+
+        for (int i = 0; i < s.length(); i++) {
+            // Odd length palindromes
+            int len1 = expand(s, i, i);
+            // Even length palindromes
+            int len2 = expand(s, i, i + 1);
+
+            int len = Math.max(len1, len2);
+            if (len > maxLen) {
+                maxLen = len;
+                start = i - (len - 1) / 2;
+            }
+        }
+
+        return s.substring(start, start + maxLen);
+    }
+
+    private int expand(String s, int left, int right) {
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
+        }
+        return right - left - 1;
+    }
+
+    //6. Zigzag Conversion
+    public String convert(String s, int numRows) {
+        if (numRows == 1) {
+            return s;
+        }
+
+        char[] charArray = s.toCharArray();
+
+        StringBuilder result = new StringBuilder();
+        //prepare zigzag
+        int zigzagPointerPosition = 0;
+        int zigzagRowLastChar = 0;
+        int zigzagPointerColumnCurrent = 0;
+        int zigzagPointerRowCurrent = 0;
+        boolean isSlayMovementActive = false;
+
+        do {
+            if (zigzagPointerPosition >= charArray.length) {
+                zigzagRowLastChar++;
+                zigzagPointerRowCurrent = zigzagRowLastChar;
+                zigzagPointerPosition = zigzagRowLastChar;
+                zigzagPointerColumnCurrent = 0;
+                isSlayMovementActive = false;
+                continue;
+            }
+
+            if (zigzagRowLastChar == zigzagPointerRowCurrent) {
+                System.out.println("Append: " + charArray[zigzagPointerPosition]);
+                result.append(charArray[zigzagPointerPosition]);
+            }
+
+            zigzagPointerPosition++;
+
+            if (isSlayMovementActive &&  (zigzagPointerRowCurrent - 1 < 0)) {
+                isSlayMovementActive = false;
+            }
+
+            if (!isSlayMovementActive && (zigzagPointerRowCurrent + 1 < numRows)) {
+                zigzagPointerRowCurrent++;
+            } else {
+                zigzagPointerRowCurrent--;
+                zigzagPointerColumnCurrent++;
+                isSlayMovementActive = true;
+            }
+
+        } while (result.length() != charArray.length);
+
+        return result.toString();
+    }
+
+
+
+
+
 }
