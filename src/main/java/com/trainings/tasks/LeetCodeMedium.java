@@ -337,4 +337,48 @@ public class LeetCodeMedium {
 
         return Integer.parseInt(stringResult);
     }
+
+    //11. Container With Most Water
+    public int maxArea(int[] height) {
+        if (height == null || height.length == 0) {
+            return 0;
+        }
+
+        int currentLeftIndex = 0;
+        int currentRightIndex = height.length - 1;
+        int highestLeftIndex = currentLeftIndex;
+        int highestRightIndex = currentRightIndex;
+
+        while (currentLeftIndex < currentRightIndex) {
+            if (height[highestLeftIndex] < height[currentLeftIndex] - ((currentLeftIndex - highestLeftIndex))) {
+                highestLeftIndex = currentLeftIndex;
+                currentLeftIndex++;
+            } else if (height[highestRightIndex] < height[currentRightIndex] - ((highestRightIndex - currentRightIndex))) {
+                highestRightIndex = currentRightIndex;
+                currentRightIndex--;
+            } else {
+                currentLeftIndex++;
+            }
+
+/*            int currentContainerHeight = Integer.min(height[highestLeftIndex], height[highestRightIndex]);
+            int currentContainerWidth = highestRightIndex - highestLeftIndex;
+            int currentContainerArea = currentContainerHeight * currentContainerWidth;
+
+            int reducedLeftContainerHeight = Integer.min(height[currentLeftIndex], height[currentRightIndex]);
+            int reducedLeftContainerWidth = currentLeftIndex - currentRightIndex;
+            int reducedLeftContainerArea = reducedLeftContainerHeight * reducedLeftContainerWidth;
+
+            if (height[highestLeftIndex] < height[currentLeftIndex] - ((currentLeftIndex - highestLeftIndex))) {
+                highestLeftIndex = currentLeftIndex;
+            }
+            if (height[highestRightIndex] < height[currentRightIndex] - ((highestRightIndex - currentRightIndex))) {
+                highestRightIndex = currentRightIndex;
+            }*/
+        }
+
+        int currentContainerHeight = Integer.min(height[highestLeftIndex], height[highestRightIndex]);
+        int currentContainerWidth = highestRightIndex - highestLeftIndex;
+
+        return currentContainerHeight * currentContainerWidth;
+    }
 }

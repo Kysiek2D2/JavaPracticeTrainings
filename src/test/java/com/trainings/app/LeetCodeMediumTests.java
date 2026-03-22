@@ -54,4 +54,22 @@ class LeetCodeMediumTests {
         assert(result == anticipatedResult);
     }
 
+    //11. Container With Most Water
+    @Test
+    void maxArea1() {
+        int[] input = new int[]{1,8,6,2,5,4,8,3,7};
+        int anticipatedResult = 49;
+        int result = leetCodeMedium.maxArea(input);
+        System.out.println("result: " + result);
+        assert(result == anticipatedResult);
+    }
+
+    @Test
+    void maxArea2() {
+        int[] input = new int[]{1,2,4,3};
+        int anticipatedResult = 4;
+        int result = leetCodeMedium.maxArea(input);
+        System.out.println("result: " + result);
+        assert(result == anticipatedResult);
+    }
 }
