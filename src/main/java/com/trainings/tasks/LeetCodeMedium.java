@@ -1,5 +1,7 @@
 package com.trainings.tasks;
 
+import ch.qos.logback.core.util.StringUtil;
+
 import java.util.*;
 
 public class LeetCodeMedium {
@@ -277,8 +279,62 @@ public class LeetCodeMedium {
         return result.toString();
     }
 
+    //8. String to Integer (atoi)
+    public int myAtoi(String s) {
 
+        s = s.trim();
+        if (s.isEmpty()) {
+            return 0;
+        }
 
+        char[] charArr = s.toCharArray();
 
+        int index = 0;
+        StringBuilder stringBuilder = new StringBuilder();
 
+        //check sign and leading zero
+        if (charArr[index] == '-') {
+            stringBuilder.append('-');
+            index++;
+        } else if (charArr[index] == '+') {
+            index++;
+        }
+
+        boolean shouldCheckForLeadingZeroFlag = true;
+
+        while (index < charArr.length && Character.isDigit(charArr[index])) {
+            if (shouldCheckForLeadingZeroFlag && charArr[index] == '0') {
+                index++;
+                continue;
+            } else {
+                shouldCheckForLeadingZeroFlag = false;
+            }
+            stringBuilder.append(charArr[index]);
+            index++;
+        }
+
+        String stringResult = stringBuilder.toString();
+        if (stringResult.isEmpty() ||
+            stringResult.equals("-") ||
+            stringResult.equals("+")) {
+            return 0;
+        }
+
+        if (stringResult.startsWith("-") &&
+                stringResult.length() > String.valueOf(Integer.MIN_VALUE).length()) {
+            return Integer.MIN_VALUE;
+        } else if (!stringResult.startsWith("-") &&
+                stringResult.length() > String.valueOf(Integer.MAX_VALUE).length()) {
+            return Integer.MAX_VALUE;
+        }
+
+        long longResult = Long.parseLong(stringResult);
+        if (longResult > Integer.MAX_VALUE) {
+            return Integer.MAX_VALUE;
+        } else if (longResult < Integer.MIN_VALUE) {
+            return Integer.MIN_VALUE;
+        }
+
+        return Integer.parseInt(stringResult);
+    }
 }
