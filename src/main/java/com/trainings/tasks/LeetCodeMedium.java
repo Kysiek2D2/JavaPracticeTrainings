@@ -350,14 +350,20 @@ public class LeetCodeMedium {
         int highestRightIndex = currentRightIndex;
 
         while (currentLeftIndex < currentRightIndex) {
-            if (height[highestLeftIndex] < height[currentLeftIndex] - ((currentLeftIndex - highestLeftIndex))) {
+            //if (height[highestLeftIndex] < height[currentLeftIndex] - ((currentLeftIndex - highestLeftIndex))) {
+            if (height[highestLeftIndex] < height[currentLeftIndex]) {
                 highestLeftIndex = currentLeftIndex;
                 currentLeftIndex++;
-            } else if (height[highestRightIndex] < height[currentRightIndex] - ((highestRightIndex - currentRightIndex))) {
+            //} else if (height[highestRightIndex] < height[currentRightIndex] - ((highestRightIndex - currentRightIndex))) {
+            } else if (height[highestRightIndex] < height[currentRightIndex]) {
                 highestRightIndex = currentRightIndex;
                 currentRightIndex--;
             } else {
-                currentLeftIndex++;
+                if (height[currentLeftIndex] < height[currentRightIndex]) {
+                    currentLeftIndex++;
+                } else {
+                    currentRightIndex--;
+                }
             }
 
 /*            int currentContainerHeight = Integer.min(height[highestLeftIndex], height[highestRightIndex]);
