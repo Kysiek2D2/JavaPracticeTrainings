@@ -72,4 +72,13 @@ class LeetCodeMediumTests {
         System.out.println("result: " + result);
         assert(result == anticipatedResult);
     }
+
+    @Test
+    void maxArea3() {
+        int[] input = new int[]{1,2,1};
+        int anticipatedResult = 2;
+        int result = leetCodeMedium.maxArea(input);
+        System.out.println("result: " + result);
+        assert(result == anticipatedResult);
+    }
 }

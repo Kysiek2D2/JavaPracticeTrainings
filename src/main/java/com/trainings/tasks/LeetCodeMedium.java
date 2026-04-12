@@ -346,45 +346,31 @@ public class LeetCodeMedium {
 
         int currentLeftIndex = 0;
         int currentRightIndex = height.length - 1;
-        int highestLeftIndex = currentLeftIndex;
-        int highestRightIndex = currentRightIndex;
+        int highestContainerSize = 0;
+        int currentContainerSize;
 
         while (currentLeftIndex < currentRightIndex) {
-            //if (height[highestLeftIndex] < height[currentLeftIndex] - ((currentLeftIndex - highestLeftIndex))) {
-            if (height[highestLeftIndex] < height[currentLeftIndex]) {
-                highestLeftIndex = currentLeftIndex;
+            currentContainerSize = getCurrentContainersSize(currentLeftIndex, currentRightIndex, height);
+            if (currentContainerSize > highestContainerSize) {
+                highestContainerSize = currentContainerSize;
+            }
+
+            if (height[currentLeftIndex] <= height[currentRightIndex]) {
                 currentLeftIndex++;
-            //} else if (height[highestRightIndex] < height[currentRightIndex] - ((highestRightIndex - currentRightIndex))) {
-            } else if (height[highestRightIndex] < height[currentRightIndex]) {
-                highestRightIndex = currentRightIndex;
-                currentRightIndex--;
             } else {
-                if (height[currentLeftIndex] < height[currentRightIndex]) {
-                    currentLeftIndex++;
-                } else {
-                    currentRightIndex--;
-                }
+                currentRightIndex--;
             }
-
-/*            int currentContainerHeight = Integer.min(height[highestLeftIndex], height[highestRightIndex]);
-            int currentContainerWidth = highestRightIndex - highestLeftIndex;
-            int currentContainerArea = currentContainerHeight * currentContainerWidth;
-
-            int reducedLeftContainerHeight = Integer.min(height[currentLeftIndex], height[currentRightIndex]);
-            int reducedLeftContainerWidth = currentLeftIndex - currentRightIndex;
-            int reducedLeftContainerArea = reducedLeftContainerHeight * reducedLeftContainerWidth;
-
-            if (height[highestLeftIndex] < height[currentLeftIndex] - ((currentLeftIndex - highestLeftIndex))) {
-                highestLeftIndex = currentLeftIndex;
-            }
-            if (height[highestRightIndex] < height[currentRightIndex] - ((highestRightIndex - currentRightIndex))) {
-                highestRightIndex = currentRightIndex;
-            }*/
         }
 
-        int currentContainerHeight = Integer.min(height[highestLeftIndex], height[highestRightIndex]);
-        int currentContainerWidth = highestRightIndex - highestLeftIndex;
+        return highestContainerSize;
+    }
+
+    private int getCurrentContainersSize(int currentLeftIndex, int currentRightIndex, int[] height) {
+        int currentContainerHeight = Integer.min(height[currentLeftIndex], height[currentRightIndex]);
+        int currentContainerWidth = currentRightIndex - currentLeftIndex;
 
         return currentContainerHeight * currentContainerWidth;
     }
+
+
 }
