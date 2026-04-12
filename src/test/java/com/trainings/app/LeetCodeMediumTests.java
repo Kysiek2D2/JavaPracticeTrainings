@@ -81,4 +81,13 @@ class LeetCodeMediumTests {
         System.out.println("result: " + result);
         assert(result == anticipatedResult);
     }
+
+    //12. Integer to Roman
+    @Test
+    void integerToRoman1() {
+        int input = 3749;
+        String anticipatedResult = "MMMDCCXLIX";
+        String result = leetCodeMedium.intToRoman(input);
+        assert(anticipatedResult.equals(result));
+    }
 }

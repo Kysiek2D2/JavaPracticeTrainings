@@ -372,5 +372,61 @@ public class LeetCodeMedium {
         return currentContainerHeight * currentContainerWidth;
     }
 
+    //12. Integer to Roman
+    public String intToRoman(int num) {
+        StringBuilder result = new StringBuilder();
 
+        Map<Integer, String> romanSymbolsMap = new LinkedHashMap<>();
+        romanSymbolsMap.put(1000, "M");
+        romanSymbolsMap.put(500, "D");
+        romanSymbolsMap.put(100, "C");
+        romanSymbolsMap.put(50, "L");
+        romanSymbolsMap.put(10, "X");
+        romanSymbolsMap.put(5, "V");
+        romanSymbolsMap.put(1, "I");
+
+        List<Integer> decimalPlaceValuesList = createDecimalPlaceValuesList(num);
+
+        for (int currentNumber : decimalPlaceValuesList) {
+            result.append(convertIntToRoman(currentNumber, romanSymbolsMap));
+        }
+        System.out.println("FINAL RESULT: " + result);
+        return result.toString();
+    }
+
+    private List<Integer> createDecimalPlaceValuesList(int num) {
+        List<Integer> decimalPlaceValuesList = new ArrayList<>();
+        int currentSum = 0;
+        int currentRest = num;
+        int currentPowerOf10 = (int) Math.pow(10, String.valueOf(num).length() - 1);
+        while (currentSum < num) {
+            int tempDecimal = (currentRest / currentPowerOf10) * currentPowerOf10;
+            decimalPlaceValuesList.add(tempDecimal);
+            currentSum += tempDecimal;
+            currentRest -= tempDecimal;
+            currentPowerOf10 = currentPowerOf10 / 10;
+            System.out.println(tempDecimal);
+        }
+        return decimalPlaceValuesList;
+    }
+
+    private String convertIntToRoman(int currentNumber, Map<Integer, String> romanSymbolsMap) {
+        StringBuilder result = new StringBuilder();
+        if (!String.valueOf(currentNumber).startsWith("4") || !String.valueOf(currentNumber).startsWith("9")) {
+            for (Map.Entry<Integer, String> entry : romanSymbolsMap.entrySet()) {
+                if (entry.getKey() <= currentNumber) {
+                    result.append(entry.getValue());
+                    currentNumber -= entry.getKey();
+                    break;
+                }
+            }
+        }
+        if (currentNumber != 0) {
+            result.append(convertIntToRoman(currentNumber, romanSymbolsMap));
+        }
+        //TODO: here I need to avoid to many same numbers, look: "Only powers of 10 (I, X, C, M) can be appended consecutively at most 3 times to represent multiples of 10. You cannot append 5 (V), 50 (L), or 500 (D) multiple times. If you need to append a symbol 4 times use the subtractive form."
+
+        System.out.println("Return from convertIntToRoman: " + result);
+        return result.toString();
+    }
 }
