@@ -90,4 +90,12 @@ class LeetCodeMediumTests {
         String result = leetCodeMedium.intToRoman(input);
         assert(anticipatedResult.equals(result));
     }
+
+    @Test
+    void integerToRoman2() {
+        int input = 1994;
+        String anticipatedResult = "MCMXCIV";
+        String result = leetCodeMedium.intToRoman(input);
+        assert(anticipatedResult.equals(result));
+    }
 }

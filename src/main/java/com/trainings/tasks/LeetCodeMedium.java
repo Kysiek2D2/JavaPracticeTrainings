@@ -1,7 +1,5 @@
 package com.trainings.tasks;
 
-import ch.qos.logback.core.util.StringUtil;
-
 import java.util.*;
 
 public class LeetCodeMedium {
@@ -385,10 +383,18 @@ public class LeetCodeMedium {
         romanSymbolsMap.put(5, "V");
         romanSymbolsMap.put(1, "I");
 
+        Map<Integer, String> substractiveFormsMap = new HashMap<>();
+        substractiveFormsMap.put(4, "IV");
+        substractiveFormsMap.put(9, "IX");
+        substractiveFormsMap.put(40, "XL");
+        substractiveFormsMap.put(90, "XC");
+        substractiveFormsMap.put(400, "CD");
+        substractiveFormsMap.put(900, "CM");
+
         List<Integer> decimalPlaceValuesList = createDecimalPlaceValuesList(num);
 
         for (int currentNumber : decimalPlaceValuesList) {
-            result.append(convertIntToRoman(currentNumber, romanSymbolsMap));
+            result.append(convertIntToRoman(currentNumber, romanSymbolsMap, substractiveFormsMap));
         }
         System.out.println("FINAL RESULT: " + result);
         return result.toString();
@@ -410,23 +416,40 @@ public class LeetCodeMedium {
         return decimalPlaceValuesList;
     }
 
-    private String convertIntToRoman(int currentNumber, Map<Integer, String> romanSymbolsMap) {
+    private String convertIntToRoman(int currentNumber, Map<Integer, String> romanSymbolsMap, Map<Integer, String> substractiveFormsMap) {
+        
         StringBuilder result = new StringBuilder();
-        if (!String.valueOf(currentNumber).startsWith("4") || !String.valueOf(currentNumber).startsWith("9")) {
-            for (Map.Entry<Integer, String> entry : romanSymbolsMap.entrySet()) {
+        for (Map.Entry<Integer, String> entry : romanSymbolsMap.entrySet()) {
+            if (!String.valueOf(currentNumber).startsWith("4") && !String.valueOf(currentNumber).startsWith("9")) {
                 if (entry.getKey() <= currentNumber) {
                     result.append(entry.getValue());
                     currentNumber -= entry.getKey();
                     break;
                 }
+            } else {
+                result.append(getSubtractiveForm(currentNumber, substractiveFormsMap));
+                currentNumber = 0;
+                break;
             }
         }
+
         if (currentNumber != 0) {
-            result.append(convertIntToRoman(currentNumber, romanSymbolsMap));
+            result.append(convertIntToRoman(currentNumber, romanSymbolsMap, substractiveFormsMap));
         }
-        //TODO: here I need to avoid to many same numbers, look: "Only powers of 10 (I, X, C, M) can be appended consecutively at most 3 times to represent multiples of 10. You cannot append 5 (V), 50 (L), or 500 (D) multiple times. If you need to append a symbol 4 times use the subtractive form."
 
         System.out.println("Return from convertIntToRoman: " + result);
         return result.toString();
     }
+
+    private String getSubtractiveForm(int currentNumber, Map<Integer, String> substractiveFormsMap) {
+        String foundRomanNumber = substractiveFormsMap.get(currentNumber);
+
+        if (foundRomanNumber == null) {
+            throw new NoSuchElementException();
+        }
+
+        return foundRomanNumber;
+    }
+
+    //
 }
