@@ -1,11 +1,12 @@
 package com.trainings.tasks;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class LeetCodeMedium {
 
     //15. 3Sum
-    public List<List<Integer>> threeSum(int[] nums) {
+    public List<List<Integer>> threeSumTooSlow(int[] nums) {
         List<List<Integer>> result = new ArrayList<>();
 
         for(int i = 0; i < nums.length; i++) {
@@ -451,5 +452,40 @@ public class LeetCodeMedium {
         return foundRomanNumber;
     }
 
-    //
+    //15. 3Sum
+    public List<List<Integer>> threeSum(int[] nums) {
+        Arrays.sort(nums);
+        List<List<Integer>> result = new ArrayList<>();
+
+        for (int index = 0; index < nums.length - 2; index++) {
+            int left = index + 1;
+            int right = nums.length - 1;
+
+            //skip if number the same
+            if (index > 0 && nums[index] == nums[index - 1]) continue;
+
+            while (left < right && right < nums.length) {
+                int sum = nums[index] + nums[left] + nums[right];
+                if (sum == 0) {
+                    result.add(List.of(nums[index], nums[left], nums[right]));
+                    left++;
+                    right--;
+
+
+                } else if(sum < 0) {
+                    left++;
+                } else {
+                    right--;
+                }
+            }
+        }
+        //Cast to Set to remove duplicates, then cast back
+        Set<List<Integer>> tempSet = new HashSet<>(result);
+        result = tempSet.stream().toList();
+
+        for(List<Integer> triplet : result) {
+            System.out.println(String.format("New triplet: %s, %s, %s", triplet.get(0), triplet.get(1), triplet.get(2)));
+        }
+        return result;
+    }
 }

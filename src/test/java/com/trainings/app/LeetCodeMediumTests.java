@@ -3,6 +3,14 @@ import com.trainings.tasks.LeetCodeMedium;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 @SpringBootTest
 class LeetCodeMediumTests {
 
@@ -97,5 +105,28 @@ class LeetCodeMediumTests {
         String anticipatedResult = "MCMXCIV";
         String result = leetCodeMedium.intToRoman(input);
         assert(anticipatedResult.equals(result));
+    }
+
+    //15. 3Sum
+    @Test
+    void threeSum_basicCase() {
+        int[] input = new int[]{-1, 0, 1, 2, -1, -4};
+
+        List<List<Integer>> expected = List.of(
+                List.of(-1, -1, 2),
+                List.of(-1, 0, 1)
+        );
+
+        List<List<Integer>> result = leetCodeMedium.threeSum(input);
+
+        assertEquals(normalize(expected), normalize(result));
+    }
+
+    private Set<List<Integer>> normalize(List<List<Integer>> input) {
+        return input.stream()
+                .map(list -> list.stream()
+                        .sorted()
+                        .collect(Collectors.toList()))
+                .collect(Collectors.toSet());
     }
 }
