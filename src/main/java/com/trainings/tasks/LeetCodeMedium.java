@@ -519,10 +519,6 @@ public class LeetCodeMedium {
                     if (bestMatch == null || distance < Math.abs(target - bestMatch)) {
                         bestMatch = currentSum;
                     }
-
-                    if (Math.abs(currentSum) > Math.abs(target) && Math.abs(currentSum) > Math.abs(target - bestMatch)) {
-                        return bestMatch;
-                    }
                     right++;
                 }
                 left++;

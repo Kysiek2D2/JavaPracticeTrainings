@@ -132,11 +132,22 @@ class LeetCodeMediumTests {
 
     //16. 3Sum Closest
     @Test
-    public void threeSumClosest() {
+    public void threeSumClosest_test_1() {
 
         int[] inputArray = new int[]{-1,2,1,-4};
         int inputTarget = 1;
         int expectedResult = 2;
+        int result = leetCodeMedium.threeSumClosest(inputArray, inputTarget);
+
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
+    public void threeSumClosest_test_2() {
+
+        int[] inputArray = new int[]{4,0,5,-5,3,3,0,-4,-5};
+        int inputTarget = -2;
+        int expectedResult = -2;
         int result = leetCodeMedium.threeSumClosest(inputArray, inputTarget);
 
         assertEquals(expectedResult, result);
