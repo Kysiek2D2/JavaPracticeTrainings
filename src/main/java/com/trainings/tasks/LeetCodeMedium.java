@@ -484,8 +484,51 @@ public class LeetCodeMedium {
         result = tempSet.stream().toList();
 
         for(List<Integer> triplet : result) {
-            System.out.println(String.format("New triplet: %s, %s, %s", triplet.get(0), triplet.get(1), triplet.get(2)));
+            System.out.printf("New triplet: %s, %s, %s%n", triplet.get(0), triplet.get(1), triplet.get(2));
         }
         return result;
+    }
+
+    //16. 3Sum Closest
+    public int threeSumClosest(int[] nums, int target) {
+        Arrays.sort(nums);
+        int index = 0;
+        int left;
+        int right;
+        int currentSum;
+        Integer bestMatch = null;
+
+        while (index < nums.length - 2) {
+            left = index + 1;
+            int numIndex = nums[index];
+
+            while (left < nums.length - 1) {
+                int numLeft = nums[left];
+                right = left + 1;
+
+                while (right < nums.length) {
+
+                    int numRight = nums[right];
+                    currentSum = numIndex + numLeft + numRight;
+
+                    if (currentSum == target) {
+                        return currentSum;
+                    }
+
+                    int distance = Math.abs(target - currentSum);
+                    if (bestMatch == null || distance < Math.abs(target - bestMatch)) {
+                        bestMatch = currentSum;
+                    }
+
+                    if (Math.abs(currentSum) > Math.abs(target) && Math.abs(currentSum) > Math.abs(target - bestMatch)) {
+                        return bestMatch;
+                    }
+                    right++;
+                }
+                left++;
+            }
+            index++;
+        }
+        return bestMatch;
     }
 }

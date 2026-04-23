@@ -129,4 +129,16 @@ class LeetCodeMediumTests {
                         .collect(Collectors.toList()))
                 .collect(Collectors.toSet());
     }
+
+    //16. 3Sum Closest
+    @Test
+    public void threeSumClosest() {
+
+        int[] inputArray = new int[]{-1,2,1,-4};
+        int inputTarget = 1;
+        int expectedResult = 2;
+        int result = leetCodeMedium.threeSumClosest(inputArray, inputTarget);
+
+        assertEquals(expectedResult, result);
+    }
 }
