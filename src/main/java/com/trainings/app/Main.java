@@ -7,6 +7,7 @@ public class Main {
 	public static void main(String[] args) {
 		LeetCodeMedium leet = new LeetCodeMedium();
 		System.out.println(leet.longestPalindrome("aba"));
+		System.out.println("test");
 	}
 
 }
