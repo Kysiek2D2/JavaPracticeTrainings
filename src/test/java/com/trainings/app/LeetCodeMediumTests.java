@@ -152,4 +152,13 @@ class LeetCodeMediumTests {
 
         assertEquals(expectedResult, result);
     }
+
+    @Test
+    public void letterCombinations_test1() {
+        String input = "23";
+        List<String> expectedResult = List.of("ad","ae","af","bd","be","bf","cd","ce","cf");
+        List<String> result = leetCodeMedium.letterCombinations(input);
+        assertEquals(expectedResult.stream().sorted().toList(),
+                result.stream().sorted().toList());
+    }
 }
