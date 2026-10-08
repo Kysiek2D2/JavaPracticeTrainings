@@ -3,10 +3,8 @@ import com.trainings.tasks.LeetCodeMedium;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.util.HashSet;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.sql.Array;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -160,5 +158,52 @@ class LeetCodeMediumTests {
         List<String> result = leetCodeMedium.letterCombinations(input);
         assertEquals(expectedResult.stream().sorted().toList(),
                 result.stream().sorted().toList());
+    }
+
+    @Test
+    public void fourSum_test1() {
+        int[] input = new int[]{1,0,-1,0,-2,2};
+        int target = 0;
+        List<List<Integer>> expectedResult = new ArrayList<>(List.of(
+                new ArrayList<>(List.of(-2, -1, 1, 2)),
+                new ArrayList<>(List.of(-2, 0, 0, 2)),
+                new ArrayList<>(List.of(-1, 0, 0, 1))
+        ));
+        List<List<Integer>> result = leetCodeMedium.fourSum(input, target);
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
+    public void fourSum_test2() {
+        int[] input = new int[]{2,2,2,2,2};
+        int target = 8;
+        List<List<Integer>> expectedResult = new ArrayList<>(List.of(
+                new ArrayList<>(List.of(2, 2, 2, 2))
+        ));
+        List<List<Integer>> result = leetCodeMedium.fourSum(input, target);
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
+    public void fourSum_test3() {
+        int[] input = new int[]{0,0,0,0};
+        int target = 0;
+        List<List<Integer>> expectedResult = new ArrayList<>(List.of(
+                new ArrayList<>(List.of(0,0,0,0))
+        ));
+        List<List<Integer>> result = leetCodeMedium.fourSum(input, target);
+        assertEquals(expectedResult, result);
+    }
+
+    @Test
+    public void fourSum_test4() {
+        int[] input = new int[]{-2,-1,-1,1,1,2,2};
+        int target = 0;
+        List<List<Integer>> expectedResult = new ArrayList<>(List.of(
+                new ArrayList<>(List.of(-2, -1, 1, 2)),
+                new ArrayList<>(List.of(-1, -1, 1, 1))
+        ));
+        List<List<Integer>> result = leetCodeMedium.fourSum(input, target);
+        assertEquals(expectedResult, result);
     }
 }

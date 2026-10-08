@@ -559,4 +559,60 @@ public class LeetCodeMedium {
         }
         return combinations;
     }
+
+    //18. 4Sum
+    public List<List<Integer>> fourSum(int[] nums, int target) {
+
+        List<List<Integer>> result = new ArrayList<>();
+
+        if (nums.length < 4) {
+            return result;
+        }
+
+        int[] sortedNums = Arrays.stream(nums).sorted().toArray();
+
+        for (int i = 0; i < sortedNums.length - 3; i++) {
+            if (i > 0 && sortedNums[i] == sortedNums[i - 1])
+                continue;
+            for (int j = i + 1; j < sortedNums.length - 2; j++) {
+                if (j > i + 1 && sortedNums[j] == sortedNums[j - 1])
+                    continue;
+                int indexLeft = j + 1;
+                int indexRight = sortedNums.length - 1;
+//                System.out.println(
+//                        String.format(
+//                                "i: %s, \n j: %s, \n indexLeft: %s, \n indexRight: %s",
+//                                i, j, indexLeft, indexRight
+//                        )
+//                );
+
+                while (indexLeft < indexRight) {
+                    long tempSum = sumIndexes(i, j, indexLeft, indexRight, sortedNums);
+//                    System.out.printf("Sum indexes: %s (%s, %s, %s, %s) \n \n",
+//                            tempSum, sortedNums[i], sortedNums[j], sortedNums[indexLeft], sortedNums[indexRight]);
+                    if (tempSum == target) {
+                        result.add(new ArrayList<>(List.of(sortedNums[i], sortedNums[j], sortedNums[indexLeft], sortedNums[indexRight])));
+                        indexLeft++;
+
+                        indexRight--;
+
+
+                        while (indexLeft < indexRight && sortedNums[indexLeft - 1] == sortedNums[indexLeft])
+                            indexLeft++;
+                        while (indexLeft < indexRight  && sortedNums[indexRight + 1] == sortedNums[indexRight])
+                            indexRight--;
+                    } else if (tempSum < target) {
+                        indexLeft++;
+                    } else {
+                        indexRight--;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    private long sumIndexes(int startIndex, int middleAindex, int middleBindex, int endIndex, int[] sortedNums) {
+        return (long) sortedNums[startIndex] + sortedNums[middleAindex] + sortedNums[middleBindex] + sortedNums[endIndex];
+    }
 }
