@@ -48,14 +48,14 @@ public class LeetCodeMedium {
         public int val;
         public ListNode next;
 
-        ListNode() {
+        public ListNode() {
         }
 
         public ListNode(int val) {
             this.val = val;
         }
 
-        ListNode(int val, ListNode next) {
+        public ListNode(int val, ListNode next) {
             this.val = val;
             this.next = next;
         }
@@ -614,5 +614,82 @@ public class LeetCodeMedium {
 
     private long sumIndexes(int startIndex, int middleAindex, int middleBindex, int endIndex, int[] sortedNums) {
         return (long) sortedNums[startIndex] + sortedNums[middleAindex] + sortedNums[middleBindex] + sortedNums[endIndex];
+    }
+
+    //19. Remove Nth Node From End of List
+    /**
+     * Definition for singly-linked list.
+     * public class ListNode {
+     *     int val;
+     *     ListNode next;
+     *     ListNode() {}
+     *     ListNode(int val) { this.val = val; }
+     *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+     * }
+     */
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+
+        int nodesSize = getNodesSize(head);
+        System.out.println("Nodes size: " + nodesSize);
+
+        int nodeNumberToRemove = nodesSize - n;
+        System.out.println("Node index to remove: " + nodeNumberToRemove);
+
+        boolean hasNext;
+        ListNode currentNode = head;
+        int index = 0;
+        do {
+            hasNext = currentNode.next != null;
+            //System.out.printf("Node index: #%s, value: %s, hasNext: %s \n \n", index, head.val, hasNext);
+            if (index == nodeNumberToRemove) {
+                if (currentNode.next != null) {
+                    return currentNode.next;
+                } else{
+                    return null;
+                }
+            }
+
+            if (index + 1 == nodeNumberToRemove) {
+                if (currentNode.next != null)
+                    currentNode.next = currentNode.next.next;
+                break;
+            }
+            currentNode = currentNode.next;
+            index++;
+        }
+        while(hasNext);
+
+        printNodes(head);
+
+        return head;
+    }
+
+    private int getNodesSize(ListNode head) {
+        int index = 0;
+        boolean hasNext = head.next != null;
+        do {
+            hasNext = head.next != null;
+            System.out.printf("Node index: #%s, value: %s, hasNext: %s \n \n", index, head.val, hasNext);
+            index++;
+            if (hasNext) {
+                head = head.next;
+            }
+        }
+        while (hasNext);
+        return index;
+    }
+
+    private void printNodes(ListNode head) {
+        boolean hasNext = head.next != null;
+        if (!hasNext) {
+            System.out.print(head.val);
+        }
+        do {
+            hasNext = head.next != null;
+            System.out.print(head.val + ", ");
+            head = head.next;
+        }
+        while (hasNext);
+        System.out.println();
     }
 }

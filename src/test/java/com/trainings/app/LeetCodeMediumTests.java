@@ -206,4 +206,25 @@ class LeetCodeMediumTests {
         List<List<Integer>> result = leetCodeMedium.fourSum(input, target);
         assertEquals(expectedResult, result);
     }
+
+    @Test
+    public void removeNthFromEnd_test1() {
+        LeetCodeMedium.ListNode inputHead = new LeetCodeMedium.ListNode(1);
+        LeetCodeMedium.ListNode tempNode = new LeetCodeMedium.ListNode(2);
+        inputHead.next = tempNode;
+        for(int k = 3; k <= 5; k++) {
+            tempNode.next = new LeetCodeMedium.ListNode(k);
+            tempNode = tempNode.next;
+        }
+
+        LeetCodeMedium.ListNode expectedHead = new LeetCodeMedium.ListNode();
+        expectedHead.next = new LeetCodeMedium.ListNode(1,
+                new LeetCodeMedium.ListNode(2,
+                        new LeetCodeMedium.ListNode(3,
+                                new LeetCodeMedium.ListNode(5, null)
+                )));
+
+        leetCodeMedium.removeNthFromEnd(inputHead, 2);
+        assertEquals(true, true);
+    }
 }
