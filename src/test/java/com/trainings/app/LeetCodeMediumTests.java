@@ -227,4 +227,5 @@ class LeetCodeMediumTests {
         leetCodeMedium.removeNthFromEnd(inputHead, 2);
         assertEquals(true, true);
     }
+
 }

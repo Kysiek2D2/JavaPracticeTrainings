@@ -692,4 +692,7 @@ public class LeetCodeMedium {
         while (hasNext);
         System.out.println();
     }
+
+
+
 }
