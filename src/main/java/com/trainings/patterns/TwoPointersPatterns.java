@@ -1,8 +1,6 @@
 package com.trainings.patterns;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class TwoPointersPatterns {
 
@@ -117,4 +115,10 @@ public class TwoPointersPatterns {
         }
         return left;
     }
+
+    public class DeadlockDemo {
+
+    }
 }
+
+
